@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amarender Reddy Badhireddy | Portfolio</title>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for in-browser JSX transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Custom keyframe animations for initial load */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 0.8s ease-out forwards;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased overflow-x-hidden">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Custom Hook for Scroll Animations (Intersection Observer)
+        const FadeInSection = ({ children, delay = '0ms' }) => {
+            const [isVisible, setVisible] = useState(false);
+            const domRef = useRef();
+
+            useEffect(() => {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setVisible(true);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+                
+                const currentRef = domRef.current;
+                if (currentRef) observer.observe(currentRef);
+                
+                return () => {
+                    if (currentRef) observer.unobserve(currentRef);
+                };
+            }, []);
+
+            return (
+                <div
+                    ref={domRef}
+                    className={`transition-all duration-1000 ease-out transform ${
+                        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                    }`}
+                    style={{ transitionDelay: delay }}
+                >
+                    {children}
+                </div>
+            );
+        };
+
+        const App = () => {
+            return (
+                <div class="min-h-screen">
+                    {/* Header Section */}
+                    <header class="bg-blue-900 text-white py-20 px-6 relative overflow-hidden">
+                        {/* Decorative background element */}
+                        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-20">
+                            <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+                            <div class="absolute top-24 -right-24 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-700"></div>
+                        </div>
+
+                        <div class="max-w-4xl mx-auto text-center relative z-10">
+                            <h1 class="text-4xl md:text-5xl font-bold mb-4 uppercase tracking-wide opacity-0 animate-fade-in-down">
+                                Amarender Reddy Badhireddy
+                            </h1>
+                            <h2 class="text-xl md:text-2xl font-light text-blue-200 mb-8 opacity-0 animate-fade-in-up delay-100">
+                                Lead Oracle Cloud Functional Testing & Opkey Consultant
+                            </h2>
+                            <div class="flex flex-wrap justify-center gap-4 text-sm md:text-base opacity-0 animate-fade-in-up delay-200">
+                                <span class="bg-blue-800 hover:bg-blue-700 transition-colors duration-300 px-4 py-2 rounded-full cursor-default shadow-lg hover:shadow-xl transform hover:-translate-y-1">📍 Hyderabad, India</span>
+                                <a href="mailto:badhireddyamarender1611@gmail.com" class="bg-blue-800 hover:bg-blue-700 transition-colors duration-300 px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1">✉️ badhireddyamarender1611@gmail.com</a>
+                                <span class="bg-blue-800 hover:bg-blue-700 transition-colors duration-300 px-4 py-2 rounded-full cursor-default shadow-lg hover:shadow-xl transform hover:-translate-y-1">📞 +91 70320 80374</span>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Main Content */}
+                    <main class="max-w-4xl mx-auto px-6 py-16 space-y-20">
+                        
+                        {/* Summary Section */}
+                        <FadeInSection>
+                            <section class="group">
+                                <h3 class="text-2xl font-bold border-b-2 border-blue-900 pb-2 mb-6 uppercase inline-block relative">
+                                    Professional Summary
+                                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-500 group-hover:w-full"></span>
+                                </h3>
+                                <p class="text-gray-700 leading-relaxed text-lg hover:text-gray-900 transition-colors duration-300">
+                                    Quality Engineering professional with nearly 6 years of experience driving the Software Testing Life Cycle (STLC) for enterprise applications. Extensive expertise in Oracle Cloud Financials, SCM, and HCM domains. Proven track record in Managed Services environments, navigating Oracle Redwood screens, and delivering scalable automation solutions through seamless onshore-offshore collaboration.
+                                </p>
+                            </section>
+                        </FadeInSection>
+
+                        {/* Projects Section */}
+                        <section>
+                            <FadeInSection>
+                                <h3 class="text-2xl font-bold border-b-2 border-blue-900 pb-2 mb-6 uppercase inline-block">Featured Projects</h3>
+                            </FadeInSection>
+                            
+                            <div class="grid md:grid-cols-2 gap-8">
+                                {/* Project 1 */}
+                                <FadeInSection delay="100ms">
+                                    <div class="bg-white p-8 rounded-xl shadow-md border border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 h-full flex flex-col">
+                                        <div class="w-12 h-12 bg-blue-100 text-blue-900 rounded-lg flex items-center justify-center mb-4 text-2xl">⚙️</div>
+                                        <h4 class="text-xl font-bold text-blue-900 mb-3">Hybrid API/UI Automation Framework</h4>
+                                        <p class="text-gray-600 mb-6 flex-grow">
+                                            Architected a hybrid test automation framework that seamlessly bridges rapid API data seeding with comprehensive UI-based functional validation.
+                                        </p>
+                                        <ul class="list-disc pl-5 text-gray-700 text-sm space-y-2">
+                                            <li>Leveraged REST APIs to rapidly seed complex transactional data (Sales Orders, Requisitions, POs, AR/AP Transactions), bypassing slow UI data entry.</li>
+                                            <li>Automated downstream workflow validations and business logic checks via UI automation using the dynamically generated API data.</li>
+                                            <li>Drastically reduced overall test execution time and increased test reliability by minimizing UI flakiness during the data creation phase.</li>
+                                        </ul>
+                                    </div>
+                                </FadeInSection>
+
+                                {/* Project 2 */}
+                                <FadeInSection delay="300ms">
+                                    <div class="bg-white p-8 rounded-xl shadow-md border border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 h-full flex flex-col">
+                                        <div class="w-12 h-12 bg-indigo-100 text-indigo-900 rounded-lg flex items-center justify-center mb-4 text-2xl">🔄</div>
+                                        <h4 class="text-xl font-bold text-blue-900 mb-3">Chrome Driver Auto-Update Utility</h4>
+                                        <p class="text-gray-600 mb-6 flex-grow">
+                                            Developed a programmatic utility to automatically detect and update Chrome drivers in the test execution environment.
+                                        </p>
+                                        <ul class="list-disc pl-5 text-gray-700 text-sm space-y-2">
+                                            <li>Eliminated pipeline failures caused by browser-driver version mismatches.</li>
+                                            <li>Reduced manual maintenance overhead for the QA automation team.</li>
+                                            <li>Ensured continuous, reliable execution of daily regression suites.</li>
+                                        </ul>
+                                    </div>
+                                </FadeInSection>
+                            </div>
+                        </section>
+
+                        {/* Skills Section */}
+                        <FadeInSection>
+                            <section>
+                                <h3 class="text-2xl font-bold border-b-2 border-blue-900 pb-2 mb-6 uppercase inline-block">Core Competencies</h3>
+                                <div class="flex flex-wrap gap-3">
+                                    {['Oracle Fusion Cloud (ERP, SCM, HCM)', 'Hybrid API/UI Automation', 'Opkey AI Automation', 'REST APIs', 'OTBI & SQL', 'Financials (AP, AR, GL, FA, CM)', 'Oracle Redwood Screens', 'Regression Testing', 'Process Mining', 'Agile/Scrum & Jira'].map((skill, index) => (
+                                        <span 
+                                            key={skill} 
+                                            class="bg-blue-50 hover:bg-blue-900 hover:text-white border border-blue-100 text-blue-900 font-medium px-5 py-2.5 rounded-lg shadow-sm transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 cursor-default"
+                                            style={{ animationDelay: `${index * 50}ms` }}
+                                        >
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </section>
+                        </FadeInSection>
+
+                        {/* Experience Timeline */}
+                        <section>
+                            <FadeInSection>
+                                <h3 class="text-2xl font-bold border-b-2 border-blue-900 pb-2 mb-8 uppercase inline-block">Experience Overview</h3>
+                            </FadeInSection>
+                            
+                            <div class="space-y-8 relative before:absolute before:inset-0 before:ml-2 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-300 before:to-transparent">
+                                
+                                <FadeInSection delay="100ms">
+                                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                        <div class="flex items-center justify-center w-5 h-5 rounded-full border-4 border-white bg-blue-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 group-hover:scale-150 transition-transform duration-300 z-10"></div>
+                                        <div class="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] p-6 bg-white rounded-xl shadow-md border border-gray-100 group-hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                                            <h4 class="font-bold text-xl text-gray-900">ResMed Technology India Pvt Ltd</h4>
+                                            <p class="text-blue-700 font-bold text-sm mb-3">Automation Test Engineer | Jul 2025 - Present</p>
+                                            <p class="text-gray-600">Delivering test automation for Oracle Center of Excellence applications in a Managed Services capacity.</p>
+                                        </div>
+                                    </div>
+                                </FadeInSection>
+
+                                <FadeInSection delay="200ms">
+                                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                        <div class="flex items-center justify-center w-5 h-5 rounded-full border-4 border-white bg-blue-600 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 group-hover:scale-150 transition-transform duration-300 z-10"></div>
+                                        <div class="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] p-6 bg-white rounded-xl shadow-md border border-gray-100 group-hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                                            <h4 class="font-bold text-xl text-gray-900">Smart Software Testing Solutions</h4>
+                                            <p class="text-blue-600 font-bold text-sm mb-3">Test Automation Engineer | May 2024 - Jul 2025</p>
+                                            <p class="text-gray-600">Led Oracle quarterly patch testing, regression validation, and managed support for Oracle Fusion clients.</p>
+                                        </div>
+                                    </div>
+                                </FadeInSection>
+
+                                <FadeInSection delay="300ms">
+                                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                        <div class="flex items-center justify-center w-5 h-5 rounded-full border-4 border-white bg-gray-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 group-hover:scale-150 transition-transform duration-300 z-10"></div>
+                                        <div class="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] p-6 bg-white rounded-xl shadow-md border border-gray-100 group-hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                                            <h4 class="font-bold text-xl text-gray-700">Sutherland Global Services</h4>
+                                            <p class="text-gray-500 font-bold text-sm mb-3">Test Automation Engineer | Jan 2022 - Dec 2023</p>
+                                        </div>
+                                    </div>
+                                </FadeInSection>
+
+                                <FadeInSection delay="400ms">
+                                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                        <div class="flex items-center justify-center w-5 h-5 rounded-full border-4 border-white bg-gray-300 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 group-hover:scale-150 transition-transform duration-300 z-10"></div>
+                                        <div class="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] p-6 bg-white rounded-xl shadow-md border border-gray-100 group-hover:shadow-xl transition-all duration-300 group-hover:-translate-y-1">
+                                            <h4 class="font-bold text-xl text-gray-600">A-Stak Consulting Services</h4>
+                                            <p class="text-gray-400 font-bold text-sm mb-3">Associate Consultant | Jan 2021 - Jan 2022</p>
+                                        </div>
+                                    </div>
+                                </FadeInSection>
+
+                            </div>
+                        </section>
+
+                    </main>
+
+                    {/* Footer */}
+                    <footer class="bg-gray-900 text-gray-400 text-center py-10">
+                        <p class="hover:text-white transition-colors duration-300">&copy; 2026 Amarender Reddy Badhireddy. All rights reserved.</p>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
